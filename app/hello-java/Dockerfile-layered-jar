@@ -1,0 +1,19 @@
+# Stage.1 Build Fat-jar via gradle build
+FROM openjdk:11-jdk-slim as builder
+WORKDIR /temp_work
+COPY . .
+RUN chmod +x ./gradlew
+RUN ./gradlew bootjar
+RUN java -Djarmode=layertools -jar build/libs/app.jar extract
+
+# Stage.2 Extract Fat-jar and compose 4 layers directories
+FROM openjdk:11-jre-slim
+WORKDIR /layeredJar
+COPY --from=builder temp_work/dependencies/ ./
+COPY --from=builder temp_work/spring-boot-loader/ ./
+COPY --from=builder temp_work/snapshot-dependencies/ ./
+COPY --from=builder temp_work/application/ ./
+
+# 컨테이너는 8080 포트로 실행된다 
+EXPOSE 8080
+ENTRYPOINT ["/bin/sh", "-c" , "exec java -Djava.security.egd=file:/dev/.urandom -Xmx1G -Xms512M -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/logs/ -Duser.timezone=Asia/Seoul org.springframework.boot.loader.JarLauncher"]
