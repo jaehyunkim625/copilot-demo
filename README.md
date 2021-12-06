@@ -37,7 +37,7 @@ copilot pipline init명령어후엔, buildspec.yml/pipline.yml파일 자동생�
 > $ copilot init --app demo \
 >  --name api \
 >  --type "Load Balanced Web Service" \
->  --dockerfile "./Dockerfile" \
+>  --dockerfile ".app/hello-nodejs/Dockerfile" \
 >  --deploy
 
 ## Copilot will set up the following resources in your account:
