@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: local
+---
+spring:
+  application:
+    name: hello-java
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+  shutdown: graceful

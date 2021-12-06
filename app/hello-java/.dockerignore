@@ -1,0 +1,2 @@
+# 빌드 전, .dockerignore파일 생성. Docker image의 파일 시스템의 node_modules 디렉터리가 현재 로컬 작업 디레터리의 node_modules 디렉터리로 덮어지지 않도록 하기 위함
+.gradle
